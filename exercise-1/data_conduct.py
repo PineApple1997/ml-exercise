@@ -25,6 +25,10 @@ def get_y(df):  # 读取标签
     return np.array(df.iloc[:, -1])  # df.iloc[:, -1]是指df的最后一列
 
 
+def get_data(df, column):
+    return np.array(df.iloc[:, column])
+
+
 def feature_normalize(df):
     return df.apply(lambda column: (column - column.mean()) / column.std())
 
