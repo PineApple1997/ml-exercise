@@ -9,40 +9,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-sns.set(context="notebook", style="whitegrid", palette="dark")
+sns.set(context="notebook", style="whitegrid")
 from mpl_toolkits.mplot3d import Axes3D
-
-
-def get_X(df):  # 读取特征
-    """
-    use concat to add intersect feature to avoid side effect
-    not efficient for big dataset though
-    """
-    ones = pd.DataFrame(np.ones(len(df)), columns=['ones'])  # ones是m行1列的dataframe
-    data = pd.concat([ones, df], axis=1)  # 合并数据，根据列合并(行是0)
-    return data.iloc[:, :-1].values  # 这个操作返回 ndarray,不是矩阵
-
-
-def get_y(df):  # 读取标签
-    """ assume the last column is the target """
-    return np.array(df.iloc[:, -1])  # df.iloc[:, -1]是指df的最后一列
-
-
-def compute_cost(X, y, theta):
-    m = X.shape[0]
-    h = X @ theta
-    J = sum((h-y)**2)/(2*m)
-    return J
-
-
-def gradient_descent(X, y, theta, alpha, iterations):
-    m = X.shape[0]
-    cost_data = [compute_cost(X, y, theta)]
-    for i in range(iterations):
-        theta = theta - (alpha / m) * (X.T @ (X @ theta - y))
-        print(compute_cost(X, y, theta))
-        cost_data.append(compute_cost(X, y, theta))
-    return theta, cost_data
+import data_conduct
 
 
 # print("X.shape:", X.shape)
@@ -51,8 +20,8 @@ def gradient_descent(X, y, theta, alpha, iterations):
 
 
 df = pd.read_csv('ex1data1.txt', names=['population', 'profit'])
-X = get_X(df)
-y = get_y(df)
+X = data_conduct.get_X(df)
+y = data_conduct.get_y(df)
 X = X.reshape(X.shape[0], 2)
 y = y.reshape(y.shape[0], 1)
 
@@ -65,8 +34,8 @@ plt.xlabel('Population of City in 10,000s')  # Set the x−axis label
 theta = np.zeros((X.shape[1], 1))  # initialize fitting parameters
 iterations = 1500
 alpha = 0.01
-print(compute_cost(X, y, theta))
-final_theta, cost_data = gradient_descent(X, y, theta, alpha, iterations)
+print(data_conduct.compute_cost(X, y, theta))
+final_theta, cost_data = data_conduct.gradient_descent(X, y, theta, alpha, iterations)
 print("theta:", final_theta)
 
 
@@ -79,15 +48,15 @@ plt.plot(X[:, 1], X @ final_theta, '-', color='r')
 plt.legend(['Linear regression', 'Training data'])
 plt.show()
 
-theta0_vals = np.linspace(-10, 10, 100)
-theta1_vals = np.linspace(-1, 4, 100)
+theta0_vals = np.linspace(-10, 10, 50)
+theta1_vals = np.linspace(-1, 4, 50)
 
 J_vals = np.zeros((len(theta0_vals), len(theta1_vals)))
 
 for i in range(len(theta0_vals)):
     for j in range(len(theta1_vals)):
         t = np.array([theta0_vals[i], theta1_vals[j]]).reshape((2, 1))
-        J_vals[i, j] = compute_cost(X, y, t)
+        J_vals[i, j] = data_conduct.compute_cost(X, y, t)
 
 
 J_vals = J_vals.T

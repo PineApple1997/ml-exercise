@@ -17,7 +17,7 @@ def get_X(df):  # 读取特征
     """
     ones = pd.DataFrame(np.ones(len(df)), columns=['ones'])  # ones是m行1列的dataframe
     data = pd.concat([ones, df], axis=1)  # 合并数据，根据列合并(行是0)
-    return data.iloc[:, 0:2].values  # 这个操作返回 ndarray,不是矩阵
+    return data.iloc[:, :-1].values  # 这个操作返回 ndarray,不是矩阵
 
 
 def get_y(df):  # 读取标签
@@ -27,3 +27,35 @@ def get_y(df):  # 读取标签
 
 def feature_normalize(df):
     return df.apply(lambda column: (column - column.mean()) / column.std())
+
+
+def compute_cost(X, y, theta):
+    m = X.shape[0]
+    h = X @ theta
+    J = sum((h-y)**2)/(2*m)
+    return J
+
+
+def gradient_descent(X, y, theta, alpha, iterations):
+    m = X.shape[0]
+    cost_data = [compute_cost(X, y, theta)]
+    for i in range(iterations):
+        theta = theta - (alpha / m) * (X.T @ (X @ theta - y))
+        cost_data.append(compute_cost(X, y, theta))
+    return theta, cost_data
+
+
+def compute_cost(X, y, theta):
+    m = X.shape[0]
+    h = X @ theta
+    J = sum((h-y)**2)/(2*m)
+    return J
+
+
+def gradient_descent(X, y, theta, alpha, iterations):
+    m = X.shape[0]
+    cost_data = [compute_cost(X, y, theta)]
+    for i in range(iterations):
+        theta = theta - (alpha / m) * (X.T @ (X @ theta - y))
+        cost_data.append(compute_cost(X, y, theta))
+    return theta, cost_data
