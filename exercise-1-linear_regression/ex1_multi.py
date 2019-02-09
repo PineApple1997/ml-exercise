@@ -29,7 +29,6 @@ ax.set_zlabel('Z')  # 坐标轴
 ax.set_ylabel('Y')
 ax.set_xlabel('X')
 plt.show()
-
 alpha = 0.01
 theta = np.zeros((X.shape[1], 1))    # X.shape[1]：特征数n
 iterations = 1500
@@ -37,10 +36,25 @@ iterations = 1500
 final_theta, cost_data = data_conduct.gradient_descent(X, y, theta, alpha, iterations)
 
 print("final_theta:", final_theta)
+
+
+theta0_vals = np.linspace(-10, 10, 50)
+theta1_vals = np.linspace(-10, 10, 50)
+theta2_vals = np.linspace(-10, 10, 50)
+J_vals = np.zeros((len(theta0_vals), len(theta1_vals), len(theta2_vals)))
+
+# for i in range(len(theta0_vals)):
+#     for j in range(len(theta1_vals)):
+#         for m in range(len(theta2_vals)):
+#             t = np.array([theta0_vals[i], theta1_vals[j], theta2_vals[m]]).reshape((3, 1))
+#             J_vals[i, j, m] = data_conduct.compute_cost(X, y, t)
 #
+#
+# J_vals = J_vals.T
 # plt.plot(X[:, 1], X @ final_theta, '-', color='r')
-# ax.plot_surface(theta0_vals, theta1_vals, J_vals, rstride=1, cstride=1, cmap='rainbow')
+# ax.plot_surface(X[:, 1], X[:, 2], J_vals, rstride=1, cstride=1, cmap='rainbow')
 # plt.legend(['Linear regression', 'Training data'])
+# plt.show()
 
 
 f2 = plt.figure(2)

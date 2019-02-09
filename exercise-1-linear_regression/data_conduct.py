@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 
-def get_X(df):  # 读取特征
+def get_X(df):  # 读取特征 在最前面加一列
     """
     use concat to add intersect feature to avoid side effect
     not efficient for big dataset though
