@@ -11,7 +11,7 @@ import pandas as pd
 import seaborn as sns
 sns.set(context="notebook", style="whitegrid")
 from mpl_toolkits.mplot3d import Axes3D
-import data_conduct
+import ex1_data_conduct
 
 
 # print("X.shape:", X.shape)
@@ -20,8 +20,8 @@ import data_conduct
 
 
 df = pd.read_csv('ex1data1.txt', names=['population', 'profit'])
-X = data_conduct.get_X(df)
-y = data_conduct.get_y(df)
+X = ex1_data_conduct.get_X(df)
+y = ex1_data_conduct.get_y(df)
 X = X.reshape(X.shape[0], 2)
 y = y.reshape(y.shape[0], 1)
 
@@ -34,8 +34,8 @@ plt.xlabel('Population of City in 10,000s')  # Set the x−axis label
 theta = np.zeros((X.shape[1], 1))  # initialize fitting parameters
 iterations = 1500
 alpha = 0.01
-print(data_conduct.compute_cost(X, y, theta))
-final_theta, cost_data = data_conduct.gradient_descent(X, y, theta, alpha, iterations)
+print(ex1_data_conduct.compute_cost(X, y, theta))
+final_theta, cost_data = ex1_data_conduct.gradient_descent(X, y, theta, alpha, iterations)
 print("theta:", final_theta)
 
 
@@ -56,7 +56,7 @@ J_vals = np.zeros((len(theta0_vals), len(theta1_vals)))
 for i in range(len(theta0_vals)):
     for j in range(len(theta1_vals)):
         t = np.array([theta0_vals[i], theta1_vals[j]]).reshape((2, 1))
-        J_vals[i, j] = data_conduct.compute_cost(X, y, t)
+        J_vals[i, j] = ex1_data_conduct.compute_cost(X, y, t)
 
 
 J_vals = J_vals.T

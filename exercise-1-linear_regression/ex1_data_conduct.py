@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2019/2/7 22:40
 # @Author  : qin yuxin
-# @File    : data_conduct.py
+# @File    : ex1_data_conduct.py
 # @Software: PyCharm
 
 
@@ -33,33 +33,17 @@ def feature_normalize(df):
     return df.apply(lambda column: (column - column.mean()) / column.std())
 
 
-def compute_cost(X, y, theta):
+def compute_cost_linear(X, y, theta):
     m = X.shape[0]
     h = X @ theta
     J = sum((h-y)**2)/(2*m)
     return J
 
 
-def gradient_descent(X, y, theta, alpha, iterations):
+def gradient_descent_linear(X, y, theta, alpha, iterations):
     m = X.shape[0]
-    cost_data = [compute_cost(X, y, theta)]
+    cost_data = [compute_cost_linear(X, y, theta)]
     for i in range(iterations):
         theta = theta - (alpha / m) * (X.T @ (X @ theta - y))
-        cost_data.append(compute_cost(X, y, theta))
-    return theta, cost_data
-
-
-def compute_cost(X, y, theta):
-    m = X.shape[0]
-    h = X @ theta
-    J = sum((h-y)**2)/(2*m)
-    return J
-
-
-def gradient_descent(X, y, theta, alpha, iterations):
-    m = X.shape[0]
-    cost_data = [compute_cost(X, y, theta)]
-    for i in range(iterations):
-        theta = theta - (alpha / m) * (X.T @ (X @ theta - y))
-        cost_data.append(compute_cost(X, y, theta))
+        cost_data.append(compute_cost_linear(X, y, theta))
     return theta, cost_data

@@ -8,11 +8,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import data_conduct
+import ex1_data_conduct
 import scipy.optimize as opt
 from sklearn.metrics import classification_report
 import seaborn as sns
 sns.set(context="notebook", style="whitegrid")
+
 
 def sigmoid(z):
     return 1/(1+np.exp(-z))
@@ -34,8 +35,8 @@ def predict(X, theta):
 
 
 df = pd.read_csv('ex2data1.txt', names=['exam1', 'exam2', 'admission'])
-X = data_conduct.get_X(df)  # x's shape: 100*3 (1, exam1, exam2)
-y = data_conduct.get_y(df)  # y's shape: 100*1
+X = ex1_data_conduct.get_X(df)  # x's shape: 100*3 (1, exam1, exam2)
+y = ex1_data_conduct.get_y(df)  # y's shape: 100*1
 X = X.reshape(X.shape[0], 3)
 y = y.reshape(y.shape[0], 1)
 

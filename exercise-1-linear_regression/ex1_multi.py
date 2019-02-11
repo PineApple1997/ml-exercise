@@ -10,14 +10,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 sns.set(context="notebook", style="whitegrid")
-import data_conduct
+import ex1_data_conduct
 from mpl_toolkits.mplot3d import Axes3D
 
 df = pd.read_csv('ex1data2.txt', names=['size', 'room', 'price'])
 
-df = data_conduct.feature_normalize(df)
-X = data_conduct.get_X(df)
-y = data_conduct.get_y(df)
+df = ex1_data_conduct.feature_normalize(df)
+X = ex1_data_conduct.get_X(df)
+y = ex1_data_conduct.get_y(df)
 X = X.reshape(X.shape[0], 3)
 y = y.reshape(y.shape[0], 1)
 
@@ -33,7 +33,7 @@ alpha = 0.01
 theta = np.zeros((X.shape[1], 1))    # X.shape[1]：特征数n
 iterations = 1500
 
-final_theta, cost_data = data_conduct.gradient_descent(X, y, theta, alpha, iterations)
+final_theta, cost_data = ex1_data_conduct.gradient_descent(X, y, theta, alpha, iterations)
 
 print("final_theta:", final_theta)
 
@@ -66,7 +66,7 @@ plt.ylabel('cost', fontsize=15)
 base = np.logspace(-4, -2, 3)  # base = 10^-5 ~ 10^-1 的5个等比元素
 lr = np.sort(np.concatenate((base, base*3)))  # 得到10个learning rate
 for alpha in lr:
-    _, cost_data = data_conduct.gradient_descent(X, y, theta, alpha, iterations)
+    _, cost_data = ex1_data_conduct.gradient_descent(X, y, theta, alpha, iterations)
     sns.lineplot(data=pd.DataFrame(cost_data), color='r')
 plt.legend(lr)
 plt.show()
