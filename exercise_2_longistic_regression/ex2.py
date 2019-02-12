@@ -8,7 +8,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-import ex1_data_conduct
+from exercise_1_linear_regression import ex1_data_conduct
 import scipy.optimize as opt
 from sklearn.metrics import classification_report
 import seaborn as sns

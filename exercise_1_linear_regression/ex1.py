@@ -34,8 +34,8 @@ plt.xlabel('Population of City in 10,000s')  # Set the x−axis label
 theta = np.zeros((X.shape[1], 1))  # initialize fitting parameters
 iterations = 1500
 alpha = 0.01
-print(ex1_data_conduct.compute_cost(X, y, theta))
-final_theta, cost_data = ex1_data_conduct.gradient_descent(X, y, theta, alpha, iterations)
+print(ex1_data_conduct.compute_cost_linear(X, y, theta))
+final_theta, cost_data = ex1_data_conduct.gradient_descent_linear(X, y, theta, alpha, iterations)
 print("theta:", final_theta)
 
 
@@ -56,7 +56,7 @@ J_vals = np.zeros((len(theta0_vals), len(theta1_vals)))
 for i in range(len(theta0_vals)):
     for j in range(len(theta1_vals)):
         t = np.array([theta0_vals[i], theta1_vals[j]]).reshape((2, 1))
-        J_vals[i, j] = ex1_data_conduct.compute_cost(X, y, t)
+        J_vals[i, j] = ex1_data_conduct.compute_cost_linear(X, y, t)
 
 
 J_vals = J_vals.T

@@ -33,7 +33,7 @@ alpha = 0.01
 theta = np.zeros((X.shape[1], 1))    # X.shape[1]：特征数n
 iterations = 1500
 
-final_theta, cost_data = ex1_data_conduct.gradient_descent(X, y, theta, alpha, iterations)
+final_theta, cost_data = ex1_data_conduct.gradient_descent_linear(X, y, theta, alpha, iterations)
 
 print("final_theta:", final_theta)
 
@@ -66,7 +66,7 @@ plt.ylabel('cost', fontsize=15)
 base = np.logspace(-4, -2, 3)  # base = 10^-5 ~ 10^-1 的5个等比元素
 lr = np.sort(np.concatenate((base, base*3)))  # 得到10个learning rate
 for alpha in lr:
-    _, cost_data = ex1_data_conduct.gradient_descent(X, y, theta, alpha, iterations)
+    _, cost_data = ex1_data_conduct.gradient_descent_linear(X, y, theta, alpha, iterations)
     sns.lineplot(data=pd.DataFrame(cost_data), color='r')
 plt.legend(lr)
 plt.show()
