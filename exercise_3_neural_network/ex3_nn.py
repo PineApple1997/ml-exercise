@@ -6,6 +6,10 @@
 # @Software: PyCharm
 
 
+"""
+前向传播
+"""
+
 import numpy as np
 import scipy.io as scio
 from sklearn.metrics import classification_report
@@ -17,13 +21,13 @@ def load_weight(path):
     data = scio.loadmat(path)
     theta1 = data['Theta1']
     theta2 = data['Theta2']
+    print("theta1's shape:", theta1.shape)
+    print("theta2's shape:", theta2.shape)
     return theta1, theta2
 
 
 def main():
     theta1, theta2 = load_weight('ex3weights.mat')  # (25, 401) (10, 26)
-    print(theta1.shape, theta2.shape)
-
     raw_X, raw_y = ex3.load_data('ex3data1.mat', transpose=False)
     X = np.concatenate((np.ones((raw_X.shape[0], 1)), raw_X), axis=1)
 

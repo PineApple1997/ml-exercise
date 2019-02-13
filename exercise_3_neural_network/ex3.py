@@ -13,7 +13,7 @@ import ex2
 from sklearn.metrics import classification_report
 
 
-def load_data(path, transpose = True):
+def load_data(path, transpose=True):
     data = scio.loadmat(path)
     raw_X = data['X']  # 特征值
     if transpose:  # 翻转
@@ -21,7 +21,7 @@ def load_data(path, transpose = True):
         raw_X = np.array([im.reshape(400) for im in raw_X])  # 把图像翻转
     raw_y = data['y']  # 结果（0～9）
     raw_y = raw_y.reshape(raw_y.shape[0])
-    print("raw X.shape:", raw_X.shape)
+    print("raw X's shape:", raw_X.shape)
     print("raw y's shape:", raw_y.shape)
     return raw_X, raw_y
 
@@ -53,6 +53,16 @@ def plot_100_img(X):
     plt.show()
 
 
+def expand_y(raw_y):
+    y_matrix = []
+    for k in range(1, 11):  # 原数据中是y把0写作10 把它修正为0（matlab中起始为1）
+        # 每次append的是一个list, y_matrix[i]有5000行，表示y中每个数是否等于i，等于为1，不等为0
+        y_matrix.append((raw_y == k).astype(int))   # y_matrix: 10*5000
+    y_matrix = [y_matrix[-1]] + y_matrix[:-1]  # [y_matrix[-1]]是为10的那些y 放到第一列（就变成0了
+    y = np.array(y_matrix)
+    return y
+
+
 def main():
     """
     一共有5000个训练样本，每个样本是20*20像素的数字的灰度图像。
@@ -73,13 +83,7 @@ def main():
     # 准备数据
     X = np.concatenate((np.ones((raw_X.shape[0], 1)), raw_X), axis=1)  # 为x加上最前面为1的一列
     print("X.shape after add a column:", X.shape)
-    y_matrix = []
-    for k in range(1, 11):  # 原数据中是y把0写作10 把它修正为0（matlab中起始为1）
-        # 每次append的是一个list, y_matrix[i]有5000行，表示y中每个数是否等于i，等于为1，不等为0
-        y_matrix.append((raw_y == k).astype(int))
-    # y_matrix: 10*5000
-    y_matrix = [y_matrix[-1]] + y_matrix[:-1]  # [y_matrix[-1]]是为10的那些y 放到第一列（就变成0了
-    y = np.array(y_matrix)  # 变成新的矩阵
+    y = expand_y(raw_y)
     print("new y's shape", y.shape)  # should be 10*5000
 
     # 训练一维模型 以0为例
