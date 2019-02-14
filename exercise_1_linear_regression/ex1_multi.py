@@ -59,12 +59,10 @@ def main():
     # plt.legend(['Linear regression', 'Training data'])
     # plt.show()
 
-
     f2 = plt.figure(2)
     sns.lineplot(data=pd.DataFrame(cost_data), color="b")
     plt.xlabel('iteration', fontsize=15)
     plt.ylabel('cost', fontsize=15)
-
 
     base = np.logspace(-4, -2, 3)  # base = 10^-5 ~ 10^-1 的5个等比元素
     lr = np.sort(np.concatenate((base, base*3)))  # 得到10个learning rate
@@ -73,6 +71,7 @@ def main():
         sns.lineplot(data=pd.DataFrame(cost_data), color='r')
     plt.legend(lr)
     plt.show()
+
 
 if __name__ == "__main__":
     main()
